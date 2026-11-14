@@ -12,12 +12,13 @@
     hours: 3,
     details: "Campaña evangelística y 15 aniversario de MMM Los Molinos. ¡Trae a toda tu familia!",
   };
-  const SHARE_TEXT = "¡Te invito! *Cristo une las Familias* — campaña evangelística y 15 aniversario de MMM Los Molinos. " +
-    "Sáb. 21 de noviembre, 6:00 p. m., Plaza de Armas de Los Molinos.\nCómo llegar: https://maps.app.goo.gl/GsSYnPoEyRWPYAWP9";
+  const SHARE_TEXT = "¡Te invito! *Cristo une las Familias* ❤️ Campaña evangelística y 15 aniversario de MMM Los Molinos. " +
+    "Sáb. 21 de noviembre, 6:00 p. m., Plaza de Armas de Los Molinos.";
 
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-  const pageUrl = () => location.href.split("#")[0];
+  // Enlace público de la landing (el de og:url), aunque se abra desde localhost o con ?fbclid=… en la dirección.
+  const pageUrl = () => document.querySelector('meta[property="og:url"]')?.content || location.href.split(/[?#]/)[0];
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // ---- Toast ----
@@ -86,7 +87,7 @@
   $(".js-maps").href = EVENT.mapsUrl;
 
   // ---- Compartir ----
-  $(".js-wa").href = "https://wa.me/?text=" + encodeURIComponent(SHARE_TEXT + "\n" + pageUrl());
+  $(".js-wa").href = "https://wa.me/?text=" + encodeURIComponent(SHARE_TEXT + "\n\n👉 " + pageUrl());
   $(".js-fb").href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(pageUrl());
   const copy = async () => {
     try { await navigator.clipboard.writeText(pageUrl()); toast("Enlace copiado"); }
